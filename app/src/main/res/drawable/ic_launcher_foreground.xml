@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Big Floppa Left Ear -->
+    <path
+        android:fillColor="#C26A1B"
+        android:pathData="M34,50 L28,26 L46,40 Z" />
+    <path
+        android:fillColor="#E89238"
+        android:pathData="M35,47 L30,30 L43,40 Z" />
+    <!-- Iconic Left Ear Tufts (Black) -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M28,26 L23,16 L27,24 L25,14 L30,23 L31,17 L32,27 Z" />
+
+    <!-- Big Floppa Right Ear -->
+    <path
+        android:fillColor="#C26A1B"
+        android:pathData="M74,50 L80,26 L62,40 Z" />
+    <path
+        android:fillColor="#E89238"
+        android:pathData="M73,47 L78,30 L65,40 Z" />
+    <!-- Iconic Right Ear Tufts (Black) -->
+    <path
+        android:fillColor="#111827"
+        android:pathData="M80,26 L85,16 L81,24 L83,14 L78,23 L77,17 L76,27 Z" />
+
+    <!-- Floppa Head & Round Cheeks -->
+    <path
+        android:fillColor="#D97706"
+        android:pathData="M36,44 C42,39 66,39 72,44 C82,52 82,72 71,80 C63,86 45,86 37,80 C26,72 26,52 36,44 Z" />
+
+    <!-- Muzzle / Whisker Pads (Light warm beige) -->
+    <path
+        android:fillColor="#FDE68A"
+        android:pathData="M44,66 C44,62 50,60 54,62 C58,60 64,62 64,66 C64,72 58,76 54,75 C50,76 44,72 44,66 Z" />
+
+    <!-- Floppa Nose -->
+    <path
+        android:fillColor="#78350F"
+        android:pathData="M51,64 L57,64 L54,68 Z" />
+
+    <!-- Mouth line -->
+    <path
+        android:strokeColor="#78350F"
+        android:strokeWidth="1.2"
+        android:pathData="M54,68 L54,72 M50,71 C52,73 54,73 54,72 C54,73 56,73 58,71" />
+
+    <!-- Floppa Meme Sunglasses -->
+    <path
+        android:fillColor="#18181B"
+        android:pathData="M35,50 L51,50 L49,59 L38,59 Z" />
+    <path
+        android:fillColor="#18181B"
+        android:pathData="M57,50 L73,50 L70,59 L59,59 Z" />
+    <path
+        android:strokeColor="#18181B"
+        android:strokeWidth="2"
+        android:pathData="M51,52 L57,52" />
+    <!-- Sunglasses Glare -->
+    <path
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.2"
+        android:pathData="M39,52 L43,52 M61,52 L65,52" />
+
+    <!-- Whiskers -->
+    <path
+        android:strokeColor="#FEF3C7"
+        android:strokeWidth="0.8"
+        android:pathData="M42,67 L30,65 M42,69 L28,70 M66,67 L78,65 M66,69 L80,70" />
+
+    <!-- Launcher Home Badge at bottom right -->
+    <path
+        android:fillColor="#F59E0B"
+        android:pathData="M76,68 L86,76 L84,86 L74,86 L74,78 L78,78 L78,84 L82,84 L84,77 L76,70 Z" />
+    <path
+        android:strokeColor="#78350F"
+        android:strokeWidth="1"
+        android:pathData="M70,76 L76,71 L82,76" />
+</vector>

@@ -1,0 +1,6 @@
+{
+  "name": "Floppa Home Launcher",
+  "description": "Custom Android launcher featuring Big Floppa AI Assistant, meme theming, system monitoring widgets, custom meme icon packs, and animated transitions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
