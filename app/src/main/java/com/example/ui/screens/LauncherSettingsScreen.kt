@@ -482,39 +482,72 @@ fun LauncherSettingsScreen(
                     shape = RoundedCornerShape(16.dp),
                     border = androidx.compose.foundation.BorderStroke(1.dp, currentTheme.primaryColor.copy(alpha = 0.2f))
                 ) {
-                    Row(
+                    Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+                            .padding(16.dp)
                     ) {
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(Icons.Default.VolumeUp, contentDescription = null, tint = currentTheme.primaryColor)
-                            Spacer(modifier = Modifier.width(10.dp))
-                            Column {
-                                Text(
-                                    "Floppa Soundboard Audio",
-                                    color = currentTheme.textColor,
-                                    fontSize = 14.sp,
-                                    fontWeight = FontWeight.Bold
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    Icons.Default.VolumeUp,
+                                    contentDescription = null,
+                                    tint = currentTheme.primaryColor
                                 )
-                                Text(
-                                    "Synthesized caracal chirps, hisses & dumpling chomps",
-                                    color = currentTheme.textColor.copy(alpha = 0.6f),
-                                    fontSize = 11.sp
-                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Column {
+                                    Text(
+                                        "Floppa Soundboard Audio",
+                                        color = currentTheme.textColor,
+                                        fontSize = 14.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        "Synthesized caracal chirps, hisses & dumpling chomps",
+                                        color = currentTheme.textColor.copy(alpha = 0.6f),
+                                        fontSize = 11.sp
+                                    )
+                                }
                             }
+
+                            Switch(
+                                checked = isSoundEnabled,
+                                onCheckedChange = onSoundToggle,
+                                colors = SwitchDefaults.colors(
+                                    checkedThumbColor = currentTheme.backgroundColor,
+                                    checkedTrackColor = currentTheme.primaryColor
+                                )
+                            )
                         }
 
-                        Switch(
-                            checked = isSoundEnabled,
-                            onCheckedChange = onSoundToggle,
-                            colors = SwitchDefaults.colors(
-                                checkedThumbColor = currentTheme.backgroundColor,
-                                checkedTrackColor = currentTheme.primaryColor
-                            )
-                        )
+                        if (isSoundEnabled) {
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            ) {
+                                Button(
+                                    onClick = { com.example.audio.FloppaSoundSynthesizer.playCaracalChirp() },
+                                    colors = ButtonDefaults.buttonColors(containerColor = currentTheme.primaryColor),
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text("Test Chirp 🐱", color = currentTheme.backgroundColor, fontSize = 12.sp)
+                                }
+                                Button(
+                                    onClick = { com.example.audio.FloppaSoundSynthesizer.playPelmeniChomp() },
+                                    colors = ButtonDefaults.buttonColors(containerColor = currentTheme.secondaryColor),
+                                    shape = RoundedCornerShape(8.dp),
+                                    modifier = Modifier.weight(1f)
+                                ) {
+                                    Text("Test Chomp 🥟", color = currentTheme.backgroundColor, fontSize = 12.sp)
+                                }
+                            }
+                        }
                     }
                 }
             }
