@@ -1,10 +1,21 @@
-name: Build & Release APK
+name: Build & Release Android APK
 
 on:
   push:
+    branches:
+      - main
+      - master
     tags:
       - 'v*'
+      - '*.*.*'
+  release:
+    types: [published, created]
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag / Version name for the release (e.g. v1.0.0)'
+        required: false
+        default: 'v1.0.0'
 
 permissions:
   contents: write
@@ -16,6 +27,8 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -28,25 +41,55 @@ jobs:
 
       - name: Make Gradle Wrapper Executable
         run: |
-          if [ -f gradlew ]; then
-            chmod +x gradlew
-          else
-            gradle wrapper
-            chmod +x gradlew
-          fi
+          chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --stacktrace
+        run: |
+          ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Create GitHub Release and Upload APK
+      - name: Prepare APK Asset
+        run: |
+          mkdir -p release-apk
+          APK_FILE=$(find app/build/outputs/apk/debug/ -name "*.apk" | head -n 1)
+          if [ -n "$APK_FILE" ]; then
+            echo "Found APK at $APK_FILE"
+            cp "$APK_FILE" release-apk/FloppaLauncher.apk
+            ls -lh release-apk/FloppaLauncher.apk
+          else
+            echo "Error: No APK file was found in app/build/outputs/apk/debug/"
+            exit 1
+          fi
+
+      - name: Determine Release Tag and Title
+        id: tag_info
+        run: |
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "tag=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+            TITLE="${{ github.event.release.name }}"
+            if [ -z "$TITLE" ]; then
+              TITLE="Floppa Launcher ${{ github.event.release.tag_name }}"
+            fi
+            echo "title=$TITLE" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.tag_name }}" ]; then
+            echo "tag=${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
+            echo "title=Floppa Launcher ${{ inputs.tag_name }}" >> $GITHUB_OUTPUT
+          elif [[ "${{ github.ref }}" == refs/tags/* ]]; then
+            echo "tag=${{ github.ref_name }}" >> $GITHUB_OUTPUT
+            echo "title=Floppa Launcher ${{ github.ref_name }}" >> $GITHUB_OUTPUT
+          else
+            echo "tag=v1.0.0" >> $GITHUB_OUTPUT
+            echo "title=Floppa Launcher v1.0.0" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Publish Release & Upload APK
         uses: softprops/action-gh-release@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: "Floppa Launcher ${{ github.ref_name }}"
+          tag_name: ${{ steps.tag_info.outputs.tag }}
+          name: ${{ steps.tag_info.outputs.title }}
           draft: false
           prerelease: false
           generate_release_notes: true
           files: |
-            app/build/outputs/apk/debug/*.apk
+            release-apk/FloppaLauncher.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
